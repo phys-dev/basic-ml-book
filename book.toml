@@ -1,10 +1,11 @@
 [book]
 authors = ["Vyacheslav Fedorov"]
 language = "ru"
-multilingual = false
+multilingual = true
 src = "src"
 title = "Базовые методы искусственного интеллекта в физических исследованиях"
 
 [output.html]
+mathjax-support = true
 url = "https://phys-dev.github.io/basic-ml-book/"
 git-repository-url = "https://github.com/phys-dev/basic-ml-book"
