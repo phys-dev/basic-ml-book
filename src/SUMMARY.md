@@ -2,4 +2,8 @@
 
 [О себе](./intro/about-me.md)
 
-# Basic
+# Немного теории
+
+- [Введение](./overview.md)
+- [Метрические алгоритмы](./metric_algo.md)
+
