@@ -3,8 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Page not found - Базовые методы искусственного интеллекта в физических исследованиях</title>
-        <base href="/">
+        <title>Метрические алгоритмы - Базовые методы искусственного интеллекта в физических исследованиях</title>
 
 
         <!-- Custom HTML head -->
@@ -91,7 +90,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro/intro.html">О книге</a></li><li class="chapter-item expanded affix "><a href="intro/about-me.html">О себе</a></li><li class="chapter-item expanded affix "><li class="part-title">Немного теории</li><li class="chapter-item expanded "><a href="overview.html"><strong aria-hidden="true">1.</strong> Введение</a></li><li class="chapter-item expanded "><a href="metric_algo.html"><strong aria-hidden="true">2.</strong> Метрические алгоритмы</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro/intro.html">О книге</a></li><li class="chapter-item expanded affix "><a href="intro/about-me.html">О себе</a></li><li class="chapter-item expanded affix "><li class="part-title">Немного теории</li><li class="chapter-item expanded "><a href="overview.html"><strong aria-hidden="true">1.</strong> Введение</a></li><li class="chapter-item expanded "><a href="metric_algo.html" class="active"><strong aria-hidden="true">2.</strong> Метрические алгоритмы</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -179,13 +178,118 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="document-not-found-404"><a class="header" href="#document-not-found-404">Document not found (404)</a></h1>
-<p>This URL is invalid, sorry. Please use the navigation bar or search to continue.</p>
+                        <h1 id="Метрические-методы"><a class="header" href="#Метрические-методы">Метрические методы</a></h1>
+<h2 id="Основная-идея"><a class="header" href="#Основная-идея">Основная идея</a></h2>
+<p>Метрические методы основаны на <strong>гипотезе компактности</strong>: объекты одного класса находятся близко, объекты разных классов — далеко.</p>
+<hr />
+<h2 id="Ближайший-центроид-nearest-centroid"><a class="header" href="#Ближайший-центроид-nearest-centroid">Ближайший центроид (Nearest Centroid)</a></h2>
+<p><strong>Алгоритм</strong>:<br />
+Для каждого класса вычисляется центроид (среднее значение признаков).<br />
+Новый объект относится к классу, чей центроид ближе.</p>
+<p><strong>Плюсы</strong>:</p>
+<ul>
+<li>Простота реализации.</li>
+<li>Мало параметров.</li>
+<li>Быстрая классификация.</li>
+</ul>
+<p><strong>Минусы</strong>:</p>
+<ul>
+<li>Чувствителен к выбросам.</li>
+<li>Подходит только для “колоколообразных” распределений.</li>
+</ul>
+<hr />
+<h2 id="Метод-k-ближайших-соседей-knn"><a class="header" href="#Метод-k-ближайших-соседей-knn">Метод k ближайших соседей (kNN)</a></h2>
+<p><strong>Алгоритм</strong>:</p>
+<ol>
+<li>Храним всю обучающую выборку.</li>
+<li>Для нового объекта находим ( k ) ближайших соседей.</li>
+<li>Класс — наиболее частый среди соседей.</li>
+</ol>
+<p><strong>Гиперпараметры</strong>:</p>
+<ul>
+<li>( k ) — число соседей.</li>
+<li>Метрика расстояния.</li>
+<li>Весовая функция.</li>
+</ul>
+<p><strong>Особенности</strong>:</p>
+<ul>
+<li><strong>Ленивое обучение</strong>: модель не обучается заранее, все вычисления происходят при классификации.</li>
+<li>Требует хранения всей выборки.</li>
+<li>Медленный на больших данных.</li>
+</ul>
+<hr />
+<h2 id="Весовые-обобщения-knn"><a class="header" href="#Весовые-обобщения-knn">Весовые обобщения kNN</a></h2>
+<p>Можно учитывать не только количество соседей, но и их расстояние до объекта:</p>
+<p>[
+a(x) = \arg \max \sum_{t=1}^{k} w_t \cdot I[y(x_t) = a]
+]</p>
+<p>где ( w_t ) — вес, зависящий от расстояния.</p>
+<p><strong>Примеры весовых схем</strong>:</p>
+<ul>
+<li>Обратное расстояние: ( w_t = \frac{1}{\rho(x, x_t)} )</li>
+<li>Ядерные веса: ( w_t = K\left(\frac{\rho(x, x_t)}{h}\right) )</li>
+</ul>
+<hr />
+<h2 id="Регрессия-НадараяВатсона"><a class="header" href="#Регрессия-НадараяВатсона">Регрессия Надарая–Ватсона</a></h2>
+<p>Обобщение kNN для регрессии:</p>
+<p>[
+a(x) = \frac{\sum_{i=1}^{m} w_i(x) y_i}{\sum_{i=1}^{m} w_i(x)}
+]</p>
+<p>где ( w_i(x) ) — вес, зависящий от расстояния до объекта обучения.</p>
+<hr />
+<h2 id="Проблемы-метрических-методов"><a class="header" href="#Проблемы-метрических-методов">Проблемы метрических методов</a></h2>
+<ol>
+<li>
+<p><strong>Зависимость от масштаба признаков</strong><br />
+Решение: нормировка (например, StandardScaler).</p>
+</li>
+<li>
+<p><strong>Проклятие размерности</strong><br />
+В больших размерностях все объекты становятся “одинаково далекими”.<br />
+Но на реальных данных есть <strong>низкоразмерная структура</strong>.</p>
+</li>
+<li>
+<p><strong>Медленная классификация</strong><br />
+Решение: эффективные структуры данных (KD-tree, Ball tree, HNSW).</p>
+</li>
+</ol>
+<hr />
+<h2 id="Метрики-расстояния"><a class="header" href="#Метрики-расстояния">Метрики расстояния</a></h2>
+<ul>
+<li><strong>Евклидова</strong>: ( \sqrt{\sum (x_i - z_i)^2} )</li>
+<li><strong>Манхэттенская</strong>: ( \sum |x_i - z_i| )</li>
+<li><strong>Минковского</strong>: ( \left( \sum |x_i - z_i|^p \right)^{1/p} )</li>
+<li><strong>Махаланобиса</strong>: учитывает ковариацию признаков.</li>
+<li><strong>Косинусная мера</strong>: для текстов и векторов.</li>
+<li><strong>Джаккарда</strong>: для множеств.</li>
+<li><strong>DTW (Dynamic Time Warping)</strong>: для временных рядов.</li>
+<li><strong>Левенштейна</strong>: для строк.</li>
+</ul>
+<hr />
+<h2 id="Пример-knn-на-python-scikit-learn"><a class="header" href="#Пример-knn-на-python-scikit-learn">Пример: kNN на Python (scikit-learn)</a></h2>
+<pre><code class="language-python">from sklearn.neighbors import KNeighborsClassifier
+
+model = KNeighborsClassifier(n_neighbors=5, metric='euclidean')
+model.fit(X_train, y_train)
+predictions = model.predict(X_test)
+</code></pre>
+<hr />
+<h2 id="Итог"><a class="header" href="#Итог">Итог</a></h2>
+<p>Метрические методы — простые, интерпретируемые и мощные инструменты, особенно когда:</p>
+<ul>
+<li>Нет явных признаковых описаний.</li>
+<li>Данные имеют геометрическую структуру.</li>
+<li>Нужна быстрая прототипизация.</li>
+</ul>
+<p><strong>Главный недостаток</strong> — вычислительная сложность на больших данных, но это решается выбором эффективных метрик и структур данных.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="overview.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
 
 
                         <div style="clear: both"></div>
@@ -194,6 +298,9 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="overview.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
 
             </nav>
 
