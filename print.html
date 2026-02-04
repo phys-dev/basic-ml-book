@@ -91,7 +91,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro/intro.html">О книге</a></li><li class="chapter-item expanded affix "><a href="intro/about-me.html">О себе</a></li><li class="chapter-item expanded affix "><li class="part-title">Немного теории</li><li class="chapter-item expanded "><a href="overview.html"><strong aria-hidden="true">1.</strong> Введение</a></li><li class="chapter-item expanded "><a href="metric-algo.html"><strong aria-hidden="true">2.</strong> Метрические алгоритмы</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro/intro.html">О книге</a></li><li class="chapter-item expanded affix "><a href="intro/about-me.html">О себе</a></li><li class="chapter-item expanded affix "><li class="part-title">Немного теории</li><li class="chapter-item expanded "><a href="overview.html"><strong aria-hidden="true">1.</strong> Введение</a></li><li class="chapter-item expanded "><a href="metric-algo.html"><strong aria-hidden="true">2.</strong> Метрические алгоритмы</a></li><li class="chapter-item expanded affix "><li class="part-title">Работаем самостоятельно</li><li class="chapter-item expanded "><a href="practicum/knn-task.html"><strong aria-hidden="true">3.</strong> Пишем свой kNN</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -383,6 +383,17 @@ predictions = model.predict(X_test)
 <li>Нужна быстрая прототипизация.</li>
 </ul>
 <p><strong>Главный недостаток</strong> — вычислительная сложность на больших данных, но это решается выбором эффективных метрик и структур данных.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="Задача-Реализация-knn-классификатора-с-нуля"><a class="header" href="#Задача-Реализация-knn-классификатора-с-нуля">Задача: Реализация KNN-классификатора "с нуля"</a></h1>
+<p>Напишите собственный класс, который реализует алгоритм k ближайших соседей для классификации.</p>
+<p>Класс должен поддерживать:</p>
+<ol>
+<li>Две метрики расстояния: евклидову и манхэттенскую</li>
+<li>Два режима голосования: равномерный (<code>uniform</code>) и взвешенный по расстоянию (<code>distance</code>)</li>
+<li>Методы <code>fit()</code> и <code>predict()</code></li>
+</ol>
+<p>Протестируйте реализацию на датасете Iris и Digits, сравните точность с <code>KNeighborsClassifier</code>.
+В отчете проанализируйте, как выбор метрики и режима голосования влияет на качество классификации.</p>
+<p><a href="https://github.com/phys-dev/knn-task">Ссылка на репозиторий</a></p>
 
                     </main>
 
