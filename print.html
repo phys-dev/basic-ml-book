@@ -91,7 +91,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro/intro.html">О книге</a></li><li class="chapter-item expanded affix "><a href="intro/about-me.html">О себе</a></li><li class="chapter-item expanded affix "><li class="part-title">Немного теории</li><li class="chapter-item expanded "><a href="overview.html"><strong aria-hidden="true">1.</strong> Введение</a></li><li class="chapter-item expanded "><a href="metric-algo.html"><strong aria-hidden="true">2.</strong> Метрические алгоритмы</a></li><li class="chapter-item expanded "><a href="linear-regression.html"><strong aria-hidden="true">3.</strong> Линейная регрессия</a></li><li class="chapter-item expanded affix "><li class="part-title">Работаем самостоятельно</li><li class="chapter-item expanded "><a href="practicum/knn-task.html"><strong aria-hidden="true">4.</strong> Пишем свой kNN</a></li><li class="chapter-item expanded "><a href="practicum/linear-regression-task.html"><strong aria-hidden="true">5.</strong> Пишем свою линейную регрессию</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro/intro.html">О книге</a></li><li class="chapter-item expanded affix "><a href="intro/about-me.html">О себе</a></li><li class="chapter-item expanded affix "><li class="part-title">Немного теории</li><li class="chapter-item expanded "><a href="overview.html"><strong aria-hidden="true">1.</strong> Введение</a></li><li class="chapter-item expanded "><a href="metric-algo.html"><strong aria-hidden="true">2.</strong> Метрические алгоритмы</a></li><li class="chapter-item expanded "><a href="linear-regression.html"><strong aria-hidden="true">3.</strong> Линейная регрессия</a></li><li class="chapter-item expanded "><a href="logistic-regression-and-trees.html"><strong aria-hidden="true">4.</strong> Логистическая регрессия</a></li><li class="chapter-item expanded affix "><li class="part-title">Работаем самостоятельно</li><li class="chapter-item expanded "><a href="practicum/knn-task.html"><strong aria-hidden="true">5.</strong> Пишем свой kNN</a></li><li class="chapter-item expanded "><a href="practicum/linear-regression-task.html"><strong aria-hidden="true">6.</strong> Пишем свою линейную регрессию</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -523,6 +523,247 @@ $$\text{цена} = w_1 \cdot \text{длина} + w_2 \cdot \text{ширина} 
 <blockquote>
 <p>В следующих главах: логистическая регрессия (классификация), метрики качества для задач классификации, деревья решений.</p>
 </blockquote>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="Логистическая-регрессия-и-Деревья-решений"><a class="header" href="#Логистическая-регрессия-и-Деревья-решений">Логистическая регрессия и Деревья решений</a></h1>
+<p>В этой главе мы рассмотрим одни из фундаментальных методов машинного обучения для задач классификации: логистическую регрессию и деревья решений.
+Также мы подробно разберем метрики качества, необходимые для оценки работы классификаторов, так как стандартная точность (accuracy) не всегда отражает реальную эффективность модели.</p>
+<h2 id="31-Линейные-классификаторы-и-Логистическая-регрессия"><a class="header" href="#31-Линейные-классификаторы-и-Логистическая-регрессия">3.1. Линейные классификаторы и Логистическая регрессия</a></h2>
+<h3 id="От-линейной-функции-к-вероятности"><a class="header" href="#От-линейной-функции-к-вероятности">От линейной функции к вероятности</a></h3>
+<p>Линейный классификатор строит решающую границу в виде гиперплоскости. Для объекта с признаками $x$ модель вычисляет линейную комбинацию:</p>
+<p>$$
+f(x) = w_1 x_1 + w_2 x_2 + ... + w_0 = w^T x
+$$</p>
+<p>В простейшем случае класс предсказывается через знак функции:
+$$
+\hat{y}_i = \text{sign}(f(x_i)) =
+\begin{cases}
+1, &amp; f(x_i) \geq 0 \
+-1, &amp; f(x_i) &lt; 0
+\end{cases}
+$$</p>
+<p>Однако для многих задач важно получить не просто класс, а <strong>вероятность</strong> принадлежности к классу.
+Возникает проблема: значение $f(x)$ лежит в диапазоне $(-\infty, +\infty)$,
+а вероятность $p$ должна быть в диапазоне $[0, 1]$.</p>
+<p>Чтобы преобразовать линейный отклик в вероятность, используется следующая цепочка рассуждений:</p>
+<ol>
+<li>Рассмотрим вероятность положительного класса $p_+ = P(y=1|x)$.</li>
+<li>Преобразуем вероятность в <strong>шанс</strong> (Odds Ratio):
+$$
+OR = \frac{p_+}{1 - p_+} \in [0, +\infty)
+$$</li>
+<li>Прологарифмируем шанс, чтобы получить диапазон $(-\infty, +\infty)$:
+$$
+\log(OR) = \log\left(\frac{p_+}{1 - p_+}\right) = f(x)
+$$</li>
+</ol>
+<p>Выразим вероятность $p_+$ из этого уравнения:
+$$
+\frac{p_+}{1 - p_+} = e^{f(x)} \implies p_+ = e^{f(x)} - p_+ e^{f(x)} \implies p_+(1 + e^{f(x)}) = e^{f(x)}
+$$</p>
+<p>Итоговая формула для вероятности (сигмоида):
+$$
+p_+ = \frac{e^{f(x)}}{1 + e^{f(x)}} = \frac{1}{1 + e^{-f(x)}} = \sigma(f(x))
+$$</p>
+<p>Таким образом, логистическая регрессия моделирует вероятность принадлежности к классу через сигмоидальную функцию от линейной комбинации признаков.</p>
+<h3 id="Понятие-отступа-margin"><a class="header" href="#Понятие-отступа-margin">Понятие отступа (Margin)</a></h3>
+<p>Для анализа качества классификации вводится понятие <strong>отступа</strong> (margin) на $i$-м объекте:</p>
+<p>$$
+M_i = y_i f(x_i) = y_i w^T x_i
+$$</p>
+<p>где $y_i \in {-1, +1}$ — истинная метка класса.</p>
+<p><strong>Интерпретация отступа:</strong></p>
+<ul>
+<li>$M_i &gt; 0$ — объект классифицирован верно ($y_i = \hat{y}_i$)</li>
+<li>$M_i \leq 0$ — объект классифицирован неверно ($y_i \neq \hat{y}_i$)</li>
+</ul>
+<p><strong>Примеры:</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>$y_i$</th><th>$f(x_i)$</th><th>$M_i = y_i f(x_i)$</th><th>Результат</th></tr></thead><tbody>
+<tr><td>+1</td><td>+6</td><td>+6</td><td>Верно, уверенно</td></tr>
+<tr><td>+1</td><td>-6</td><td>-6</td><td>Ошибка</td></tr>
+<tr><td>-1</td><td>-6</td><td>+6</td><td>Верно, уверенно</td></tr>
+<tr><td>-1</td><td>+6</td><td>-6</td><td>Ошибка</td></tr>
+</tbody></table>
+</div>
+<p>Чем больше положительный отступ, тем более «уверенно» модель относит объект к правильному классу.
+Это понятие лежит в основе многих функций потерь, включая log loss.</p>
+<h3 id="Задача-оптимизации-log-loss"><a class="header" href="#Задача-оптимизации-log-loss">Задача оптимизации: Log Loss</a></h3>
+<p>Для обучения модели необходимо подобрать веса $w$, максимизирующие правдоподобие данных.
+Предположим, что объекты независимы и одинаково распределены (i.i.d.).</p>
+<p>Вероятность правильного предсказания для объекта $i$ с меткой $y_i \in {-1, 1}$:
+$$
+P(y_i | x_i, w) = \sigma(y_i w^T x_i) = \sigma(M_i)
+$$</p>
+<p>Функция правдоподобия для всей выборки:
+$$
+P(Y | X, w) = \prod_{i=1}^{N} \sigma(y_i w^T x_i) \to \max
+$$</p>
+<p>Для удобства оптимизации перейдем к логарифму правдоподобия:
+$$
+\sum_{i=1}^{N} \log \sigma(y_i w^T x_i) \to \max
+$$</p>
+<p>Подставив определение сигмоиды $\sigma(z) = \frac{1}{1 + e^{-z}}$, получим:
+$$
+\sum_{i=1}^{N} \log \frac{1}{1 + e^{-y_i w^T x_i}} = - \sum_{i=1}^{N} \log (1 + e^{-y_i w^T x_i}) \to \max
+$$</p>
+<p>Задача максимизации логарифма правдоподобия эквивалентна задаче минимизации функции потерь (Log Loss):
+$$
+\mathcal{L}(w) = \sum_{i=1}^{N} \log (1 + e^{-y_i w^T x_i}) = \sum_{i=1}^{N} \log (1 + e^{-M_i}) \to \min
+$$</p>
+<p><strong>Связь с отступом:</strong> Функция log loss штрафует малые и отрицательные отступы.
+При $M_i \to +\infty$ потери стремятся к нулю, при $M_i \to -\infty$ — растут линейно.</p>
+<p><strong>Методы оптимизации:</strong></p>
+<ul>
+<li>Градиентный спуск</li>
+<li>Регуляризация (L1, L2) для борьбы с переобучением, аналогично линейной регрессии</li>
+</ul>
+<hr />
+<h2 id="32-Метрики-качества-классификации"><a class="header" href="#32-Метрики-качества-классификации">3.2. Метрики качества классификации</a></h2>
+<p>Выбор правильной метрики критически важен, особенно при несбалансированных классах.</p>
+<h3 id="accuracy-и-её-ограничения"><a class="header" href="#accuracy-и-её-ограничения">Accuracy и её ограничения</a></h3>
+<p><strong>Accuracy (Доля правильных ответов):</strong>
+$$
+\text{Accuracy} = \frac{\text{Число верных предсказаний}}{\text{Общее число объектов}}
+$$</p>
+<p><strong>Проблема:</strong> Accuracy может вводить в заблуждение на несбалансированных данных.</p>
+<ul>
+<li>Пример: Диагностика редкой болезни.
+<ul>
+<li>100 000 здоровых, 10 больных.</li>
+<li>Если классификатор всегда предсказывает «здоров», Accuracy = $100000 / 100010 \approx 99.99%$.</li>
+<li>При этом модель бесполезна, так как не находит ни одного больного.</li>
+</ul>
+</li>
+</ul>
+<h3 id="Матрица-ошибок-confusion-matrix"><a class="header" href="#Матрица-ошибок-confusion-matrix">Матрица ошибок (Confusion Matrix)</a></h3>
+<p>Для детального анализа используется матрица ошибок:</p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left"></th><th style="text-align: center">Предсказано: 1 (Больной)</th><th style="text-align: center">Предсказано: 0 (Здоровый)</th></tr></thead><tbody>
+<tr><td style="text-align: left"><strong>Реально: 1 (Больной)</strong></td><td style="text-align: center"><strong>TP</strong> (True Positive)</td><td style="text-align: center"><strong>FN</strong> (False Negative)</td></tr>
+<tr><td style="text-align: left"><strong>Реально: 0 (Здоровый)</strong></td><td style="text-align: center"><strong>FP</strong> (False Positive)</td><td style="text-align: center"><strong>TN</strong> (True Negative)</td></tr>
+</tbody></table>
+</div>
+<ul>
+<li><strong>TP:</strong> Сколько больных назвали больными.</li>
+<li><strong>TN:</strong> Сколько здоровых назвали здоровыми.</li>
+<li><strong>FP:</strong> Сколько здоровых назвали больными (Ошибка I рода).</li>
+<li><strong>FN:</strong> Сколько больных назвали здоровыми (Ошибка II рода).</li>
+</ul>
+<p>$$
+\text{Accuracy} = \frac{TP + TN}{TP + TN + FP + FN}
+$$</p>
+<h3 id="precision-и-recall"><a class="header" href="#precision-и-recall">Precision и Recall</a></h3>
+<p>Для задач с дисбалансом классов чаще используют Precision и Recall.</p>
+<ol>
+<li><strong>Precision (Точность):</strong> Какая доля объектов, названных положительными, действительно является положительными.
+$$
+\text{Precision} = \frac{TP}{TP + FP}
+$$</li>
+<li><strong>Recall (Полнота):</strong> Какая доля реальных положительных объектов была найдена моделью.
+$$
+\text{Recall} = \frac{TP}{TP + FN}
+$$</li>
+</ol>
+<p><strong>Пример 1:</strong> Если модель нашла только 1 больного из 10, но не ошиблась на здоровых:</p>
+<ul>
+<li>Precision = $1 / (0 + 1) = 1$ (все найденные — действительно больные).</li>
+<li>Recall = $1 / (1 + 9) = 0.1$ (найден только 10% больных).</li>
+</ul>
+<p><strong>Пример 2:</strong> Поменяем целевой класс — будем искать здоровых (100 000 здоровых, 10 больных):</p>
+<ul>
+<li>Precision = $100000 / (100000 + 9) \approx 0.99991$</li>
+<li>Recall = $100000 / (100000 + 0) = 1$</li>
+</ul>
+<p>Это демонстрирует, что выбор положительного класса влияет на интерпретацию метрик.</p>
+<h3 id="f-мера-f-score"><a class="header" href="#f-мера-f-score">F-мера (F-score)</a></h3>
+<p>Для баланса между Precision и Recall используется гармоническое среднее — $F_\beta$-мера:</p>
+<p>$$
+F_\beta = (\beta^2 + 1) \frac{\text{Precision} \times \text{Recall}}{\beta^2 \text{Precision} + \text{Recall}}
+$$</p>
+<p>Наиболее популярна <strong>F1-мера</strong> ($\beta = 1$):
+$$
+F_1 = 2 \frac{\text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}}
+$$</p>
+<h3 id="roc-кривая-и-auc"><a class="header" href="#roc-кривая-и-auc">ROC-кривая и AUC</a></h3>
+<p>Многие классификаторы (включая логистическую регрессию) выдают вероятность $p_+ \in [0, 1]$. Порог классификации можно варьировать.</p>
+<ul>
+<li><strong>TPR (True Positive Rate):</strong> То же самое, что Recall.
+$$
+\text{TPR} = \frac{TP}{TP + FN}
+$$</li>
+<li><strong>FPR (False Positive Rate):</strong> Доля здоровых, ошибочно названных больными.
+$$
+\text{FPR} = \frac{FP}{FP + TN}
+$$</li>
+</ul>
+<p><strong>ROC-кривая (Receiver Operating Characteristic):</strong> Зависимость TPR от FPR при изменении порога классификации.</p>
+<p><strong>AUC (Area Under Curve):</strong> Площадь под ROC-кривой.</p>
+<ul>
+<li>AUC = 1: Идеальный классификатор.</li>
+<li>AUC = 0.5: Случайное угадывание.</li>
+<li>Чем больше AUC, тем лучше классификатор ранжирует объекты (отделяет положительный класс от отрицательного).</li>
+</ul>
+<hr />
+<h2 id="33-Деревья-решений-decision-trees"><a class="header" href="#33-Деревья-решений-decision-trees">3.3. Деревья решений (Decision Trees)</a></h2>
+<p>Дерево решений — это непараметрический метод, который строит последовательность правил для классификации объектов.</p>
+<h3 id="Принцип-построения"><a class="header" href="#Принцип-построения">Принцип построения</a></h3>
+<p>Представим, что у нас есть один признак. Мы сортируем объекты по нему и выбираем порог $t$, разделяющий выборку на две части: $L$ (left) и $R$ (right).</p>
+<p>Формально, для признака $x_i$ и порога $t_j$:
+$$
+Q \xrightarrow{x_i &lt; t_j} \begin{cases} L \ R \end{cases}
+$$</p>
+<p>Цель разделения — уменьшить разнородность (гетерогенность) в дочерних узлах. Качество разделения оценивается функцией:
+$$
+G(x_i, t_j) = \frac{|L|}{|Q|} H(L) + \frac{|R|}{|Q|} H(R)
+$$
+где $H(R)$ — функция неопределенности (impurity) в узле.</p>
+<h3 id="Критерии-неопределенности"><a class="header" href="#Критерии-неопределенности">Критерии неопределенности</a></h3>
+<p>Пусть $p_0$ и $p_1$ — доли объектов классов 0 и 1 в узле.</p>
+<ol>
+<li><strong>Misclassification (Доля ошибок):</strong>
+$$
+H(R) = 1 - \max(p_0, p_1)
+$$</li>
+<li><strong>Entropy (Энтропия):</strong>
+$$
+H(R) = -p_0 \log_2 p_0 - p_1 \log_2 p_1 = - \sum_k p_k \log_2 p_k
+$$</li>
+<li><strong>Gini (Индекс Джини):</strong>
+$$
+H(R) = 1 - p_0^2 - p_1^2 = 1 - \sum_k p_k^2
+$$</li>
+</ol>
+<h3 id="Когда-останавливаться-Регуляризация"><a class="header" href="#Когда-останавливаться-Регуляризация">Когда останавливаться? (Регуляризация)</a></h3>
+<p>Если не ограничивать рост дерева, оно переобучится (запомнит каждый объект). Критерии остановки:</p>
+<ul>
+<li>Ограничить максимальную глубину дерева.</li>
+<li>Ограничить минимальное количество объектов в узле для дальнейшего деления.</li>
+<li>Ограничить минимальное количество объектов в листе.</li>
+<li><strong>Pruning (Обрезка):</strong> Построить большое дерево, а затем «постричь» ветви, которые не дают прироста качества на валидации.</li>
+</ul>
+<h3 id="Плюсы-и-минусы-деревьев-решений"><a class="header" href="#Плюсы-и-минусы-деревьев-решений">Плюсы и минусы деревьев решений</a></h3>
+<p><strong>Плюсы:</strong></p>
+<ul>
+<li><strong>Интерпретируемость:</strong> Правила легко понять и визуализировать.</li>
+<li><strong>Масштаб:</strong> Устойчивы к разным масштабам признаков (не требуют нормировки).</li>
+<li><strong>Пропуски:</strong> Некоторые реализации могут работать с пропусками в данных.</li>
+<li><strong>Параметры:</strong> Мало гиперпараметров для настройки.</li>
+</ul>
+<p><strong>Минусы:</strong></p>
+<ul>
+<li><strong>Шум:</strong> Чувствительны к шуму в данных (склонность к переобучению).</li>
+<li><strong>Границы:</strong> Разделяющая граница кусочно-линейная (перпендикулярна осям признаков).</li>
+<li><strong>Нестабильность:</strong> Малое изменение данных может сильно изменить структуру дерева.</li>
+<li><strong>Экстраполяция:</strong> Не умеют экстраполировать (предсказывать за пределами диапазона обучающей выборки), только интерполируют.</li>
+</ul>
+<hr />
+<h2 id="34-Заключение"><a class="header" href="#34-Заключение">3.4. Заключение</a></h2>
+<p>В этой лекции мы рассмотрели логистическую регрессию как способ получения вероятностных оценок в линейных моделях и разобрали ключевые метрики для оценки качества классификации, такие как Precision, Recall и ROC-AUC.
+Важным понятием оказался <strong>отступ (margin)</strong>, который связывает линейный отклик модели с качеством классификации и лежит в основе функции потерь log loss.</p>
+<p>Также мы познакомились с деревьями решений — мощным инструментом, который лежит в основе более сложных алгоритмов.</p>
+<p><strong>Что дальше?</strong>
+В следующих главах мы рассмотрим:</p>
+<ul>
+<li>Ансамбли деревьев (Random Forest, Gradient Boosting).</li>
+<li>Методы улучшения стабильности и качества деревьев.</li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="Задача-Реализация-knn-классификатора-с-нуля"><a class="header" href="#Задача-Реализация-knn-классификатора-с-нуля">Задача: Реализация KNN-классификатора "с нуля"</a></h1>
 <p>Напишите собственный класс, который реализует алгоритм k ближайших соседей для классификации.</p>
 <p>Класс должен поддерживать:</p>
