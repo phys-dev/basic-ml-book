@@ -12,5 +12,5 @@
 # Работаем самостоятельно
 
 - [Свой kNN](./practicum/knn-task.md)
-- [Своя линейную регрессию](./practicum/linear-regression-task.md)
+- [Своя линейная регрессия](./practicum/linear-regression-task.md)
 
