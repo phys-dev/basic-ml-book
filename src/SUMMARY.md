@@ -7,6 +7,7 @@
 - [Введение](./overview.md)
 - [Метрические алгоритмы](./metric-algo.md)
 - [Линейная регрессия](./linear-regression.md)
+- [Логистическая регрессия](./logistic-regression-and-trees.md)
 
 # Работаем самостоятельно
 
