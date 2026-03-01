@@ -16,4 +16,6 @@
 - [Своя линейная регрессия](./practicum/linear-regression-task.md)
 - [Своя логистическая регрессия](./practicum/logistic-regression-task.md)
 
+# Отвечаем на вопросы
 
+- [Вопросы и ответы](./questions-and-answers.md)
