@@ -1,0 +1,389 @@
+<!DOCTYPE HTML>
+<html lang="ru" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Случайный лес и градиентный бустинг - Базовые методы искусственного интеллекта в физических исследованиях</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+        <!-- MathJax -->
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro/intro.html">О книге</a></li><li class="chapter-item expanded affix "><a href="intro/about-me.html">О себе</a></li><li class="chapter-item expanded affix "><li class="part-title">Немного теории</li><li class="chapter-item expanded "><a href="overview.html"><strong aria-hidden="true">1.</strong> Введение</a></li><li class="chapter-item expanded "><a href="metric-algo.html"><strong aria-hidden="true">2.</strong> Метрические алгоритмы</a></li><li class="chapter-item expanded "><a href="linear-regression.html"><strong aria-hidden="true">3.</strong> Линейная регрессия</a></li><li class="chapter-item expanded "><a href="logistic-regression-and-trees.html"><strong aria-hidden="true">4.</strong> Логистическая регрессия и деревья</a></li><li class="chapter-item expanded "><a href="random-forest-and-gradient-boosting.html" class="active"><strong aria-hidden="true">5.</strong> Случайный лес и градиентный бустинг</a></li><li class="chapter-item expanded affix "><li class="part-title">Работаем самостоятельно</li><li class="chapter-item expanded "><a href="practicum/knn-task.html"><strong aria-hidden="true">6.</strong> Свой kNN</a></li><li class="chapter-item expanded "><a href="practicum/linear-regression-task.html"><strong aria-hidden="true">7.</strong> Своя линейная регрессия</a></li><li class="chapter-item expanded "><a href="practicum/logistic-regression-task.html"><strong aria-hidden="true">8.</strong> Своя логистическая регрессия</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Базовые методы искусственного интеллекта в физических исследованиях</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/phys-dev/basic-ml-book" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="Глава-4-Деревья-Случайный-лес-Градиентный-бустинг"><a class="header" href="#Глава-4-Деревья-Случайный-лес-Градиентный-бустинг">Глава 4. Деревья. Случайный лес. Градиентный бустинг</a></h1>
+<h2 id="Введение"><a class="header" href="#Введение">Введение</a></h2>
+<p>В данной главе рассматриваются методы анализа больших массивов данных, основанные на деревьях решений и их ансамблях. Мы изучим регрессионные деревья, проблему смещения и разброса (bias-variance), а также методы объединения моделей: бэггинг (Bagging), случайный лес (Random Forest) и бустинг (Boosting), включая градиентный бустинг.</p>
+<h2 id="1-Деревья-решений"><a class="header" href="#1-Деревья-решений">1. Деревья решений</a></h2>
+<h3 id="Регрессия"><a class="header" href="#Регрессия">Регрессия</a></h3>
+<p>При построении деревьев для задач регрессии используется критерий качества разбиения. Обозначения из лекции:</p>
+<ul>
+<li>$G_{x_i, t_j} = L_Q H_L + R_Q H_R$</li>
+<li><strong>MSE (Среднеквадратичная ошибка):</strong> $H_R = \frac{1}{N} \sum_{i}^{N} (y_m - y_i)^2$, где $y_m$ — среднее значение.</li>
+<li><strong>MAE (Средняя абсолютная ошибка):</strong> $H_R = \frac{1}{N} \sum_{i}^{N} |y_m - y_i|$, где $y_m$ — медиана.</li>
+</ul>
+<h3 id="Оптимизация"><a class="header" href="#Оптимизация">Оптимизация</a></h3>
+<p>Сложность алгоритмов построения деревьев оценивается следующим образом:</p>
+<ul>
+<li><strong>Сложность подготовки:</strong> $O(N \cdot \log N \cdot d)$, где $d$ — количество признаков, $N$ — количество объектов. Необходимо отсортировать все признаки перед тем, как считать ошибку на разных разбиениях.</li>
+<li><strong>Сложность ошибки:</strong> $O(N)$.</li>
+<li><strong>Сложность нахождения оптимального разбиения:</strong> $O(N^2 d)$.</li>
+</ul>
+<p>Существуют методы оптимизации пересчета ошибок. Например, переход от суммы квадратов отклонений для $N$ объектов к сумме для $N-1$ объектов может быть выполнен за $O(1)$ для одного пересчёта при использовании определенных формул преобразования сумм. Также применяются эвристические оптимизации, например, рассмотрение случайного набора признаков в каждой вершине.</p>
+<h2 id="2-Смещение-и-Разброс-bias-variance"><a class="header" href="#2-Смещение-и-Разброс-bias-variance">2. Смещение и Разброс (Bias-Variance)</a></h2>
+<h3 id="decomposition-of-error"><a class="header" href="#decomposition-of-error">Decomposition of Error</a></h3>
+<p>Рассмотрим модель зависимости истинных значений от функции:
+$$y = f(x) + \varepsilon$$
+где:</p>
+<ul>
+<li>$y$ — истинные значения;</li>
+<li>$f(x)$ — закон природы;</li>
+<li>$\varepsilon$ — ошибка измерения ($\varepsilon \in N(0, \sigma^2)$, математическое ожидание $M\varepsilon = 0$).</li>
+</ul>
+<p>Таким образом, $y \in N(f(x), \sigma^2)$, математическое ожидание $My = f(x)$.</p>
+<p>Рассмотрим семейство функций-регрессоров $b = b(x)$, приближенных к $f(x)$. В конкретной точке множество регрессоров даст множество значений. У $b(x)$ есть математическое ожидание и дисперсия.</p>
+<p>Разложение среднеквадратичной ошибки (MSE):
+$$MSE = M(y - b)^2 = M(y^2) + M(b^2) - 2M(by)$$</p>
+<p>Используя свойства дисперсии $Var(x) = Dx = M(x - Mx)^2 = Mx^2 - M[x]^2$:</p>
+<ol>
+<li>$My^2 = Dy + M[y]^2 = \sigma^2 + f^2$</li>
+<li>$Mb^2 = Db + M[b]^2$</li>
+<li>$Mby = M(f + \varepsilon)b = Mfb + M\varepsilon b = fMb + M\varepsilon Mb = fMb$</li>
+</ol>
+<p>Подставляя в формулу MSE:
+$$MSE = \sigma^2 + f^2 + Db + Mb^2 - 2fMb = (f - Mb)^2 + Db + \sigma^2$$</p>
+<p>Где:</p>
+<ul>
+<li>$(f - M[b]) = \text{bias}$ (смещение);</li>
+<li>$Db = \text{variance}$ (разброс);</li>
+<li>$\sigma^2$ — неустранимая ошибка.</li>
+</ul>
+<p>Итоговая формула decomposition:
+$$MSE = \text{bias}^2 + \text{variance} + \sigma^2$$</p>
+<h3 id="Влияние-сложности-модели"><a class="header" href="#Влияние-сложности-модели">Влияние сложности модели</a></h3>
+<ul>
+<li>Сложные модели склонны иметь большое значение <strong>variance</strong> из-за переобучения.</li>
+<li>Простые модели склонны иметь большое значение <strong>bias</strong>.</li>
+</ul>
+<h2 id="3-Ансамбли-моделей"><a class="header" href="#3-Ансамбли-моделей">3. Ансамбли моделей</a></h2>
+<h3 id="Мудрость-толпы"><a class="header" href="#Мудрость-толпы">Мудрость толпы</a></h3>
+<p>На ярмарке проводилась лотерея: нужно было угадать вес быка по внешнему виду.</p>
+<ul>
+<li>Участвовало 800 человек.</li>
+<li>Реальный вес быка: 1198 фунтов.</li>
+<li>Ни один человек не угадал точный вес.</li>
+<li>Среднее арифметическое их предсказаний: 1197 фунтов.</li>
+</ul>
+<p><strong>Почему так?</strong> Каждый, основываясь на своём «независимом» опыте, ошибался в большую или меньшую сторону, но «в среднем» одинаково.</p>
+<h3 id="Бэггинг-bagging"><a class="header" href="#Бэггинг-bagging">Бэггинг (Bagging)</a></h3>
+<p>Идея заключается в усреднении предсказаний нескольких классификаторов или регрессоров. Чтобы дать моделям разный «опыт», их обучают на разных данных. Используется метод <strong>Bootstrap</strong>: элемент из общей выборки берётся случайным образом, при этом один и тот же элемент может быть взят несколько раз.</p>
+<p>Пусть $b_1(x), ..., b_n(x)$ — модели регрессии, $f(x)$ — функция истинных значений. Квадратичная ошибка $i$-й модели: $\varepsilon_i^2(x) = (b_i(x) - f(x))^2$.
+Если усреднить ошибку всех моделей, получим $\frac{1}{n} M_x [\sum \varepsilon_i^2(x)]$.</p>
+<p>Предположим, что ошибки несмещены ($M_x \varepsilon_i(x) = 0$) и некоррелированы ($M_x \varepsilon_i(x)\varepsilon_j(x) = 0$ при $i \neq j$).
+Построим новую модель:
+$$a(x) = \frac{1}{n} \sum_{i}^{n} b_i(x)$$</p>
+<p>Тогда среднеквадратичная ошибка новой модели:
+$$M_x \left( \frac{1}{n} \sum_{i}^{n} b_i(x) - f(x) \right)^2 = M_x \left( \frac{1}{n} \sum_{i}^{n} \varepsilon_i(x) \right)^2 = \frac{1}{n^2} M_x \sum_{i}^{n} \varepsilon_i^2(x)$$</p>
+<p><strong>Вывод:</strong> Бэггинг снижает variance в ошибке (снижает эффект переобучения) примерно в $n$ раз (при условии некоррелированности). Модели «в среднем» ошибаются одинаково, но в разные стороны. В меньшее число моделей попадают выбросы.</p>
+<h3 id="Случайный-лес-random-forest"><a class="header" href="#Случайный-лес-random-forest">Случайный лес (Random Forest)</a></h3>
+<p>Метод развивает идею бэггинга для деревьев:</p>
+<ol>
+<li>Обучаем деревья на разных подвыборках.</li>
+<li>Чтобы повысить некоррелированность деревьев, при построении узла дерева ищем наилучшее разбиение не по всем признакам, а лишь по части.</li>
+</ol>
+<p><strong>Гиперпараметры:</strong> количество деревьев + гиперпараметры дерева.</p>
+<ul>
+<li>В регрессии выбираем среднее.</li>
+<li>В классификации выбираем большинство.</li>
+</ul>
+<p><strong>Преимущества:</strong></p>
+<ul>
+<li>Высокая точность.</li>
+<li>Менее чувствителен к выбросам.</li>
+<li>Менее склонен к переобучению.</li>
+<li>Хорошо параллелится.</li>
+<li>Хорошо работает с дефолтными параметрами.</li>
+</ul>
+<p><strong>Недостатки:</strong></p>
+<ul>
+<li>Сложно интерпретировать.</li>
+<li>Плохо работает с разреженными признаками.</li>
+<li>Не экстраполируется.</li>
+<li>Требует много памяти.</li>
+</ul>
+<h2 id="4-Бустинг"><a class="header" href="#4-Бустинг">4. Бустинг</a></h2>
+<h3 id="adaboost-и-случайные-пни"><a class="header" href="#adaboost-и-случайные-пни">AdaBoost и случайные пни</a></h3>
+<p>В бустинге элементы, на которых модель ошиблась, будут иметь больший вес на следующих шагах. Часто используются «пни» — деревья глубиной 1.</p>
+<h3 id="Градиентный-бустинг-Пример"><a class="header" href="#Градиентный-бустинг-Пример">Градиентный бустинг: Пример</a></h3>
+<p><strong>Задача:</strong> Предсказать цену товара по возрасту (в днях).
+Допустим, есть только один признак.</p>
+<p><strong>Шаг 1:</strong> Начальное приближение — среднее по выборке.
+Цены: 700, 800, 600, 400, 300.
+Среднее: $(700+800+600+400+300) / 5 = 560$.</p>
+<p>Считаем остатки (цена - приближение):</p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Возраст (дней)</th><th style="text-align: left">Цена</th><th style="text-align: left">Приближение</th><th style="text-align: left">Остаток</th></tr></thead><tbody>
+<tr><td style="text-align: left">25</td><td style="text-align: left">700</td><td style="text-align: left">560</td><td style="text-align: left">140</td></tr>
+<tr><td style="text-align: left">50</td><td style="text-align: left">800</td><td style="text-align: left">560</td><td style="text-align: left">240</td></tr>
+<tr><td style="text-align: left">75</td><td style="text-align: left">600</td><td style="text-align: left">560</td><td style="text-align: left">40</td></tr>
+<tr><td style="text-align: left">80</td><td style="text-align: left">400</td><td style="text-align: left">560</td><td style="text-align: left">-160</td></tr>
+<tr><td style="text-align: left">100</td><td style="text-align: left">300</td><td style="text-align: left">560</td><td style="text-align: left">-260</td></tr>
+</tbody></table>
+</div>
+<p><strong>Шаг 2:</strong> Строим регрессионное дерево, которое предсказывает остатки.
+Разбиение по признаку Возраст &gt;= 80:</p>
+<ul>
+<li>Ветка 1 (Age &lt; 80): Остатки 140, 240, 40. Среднее: 140.</li>
+<li>Ветка 2 (Age &gt;= 80): Остатки -160, -260. Среднее: -210.</li>
+</ul>
+<p><strong>Шаг 3:</strong> Прибавляем предсказание дерева к приближению (можно с коэффициентом, в примере без него).</p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Возраст</th><th style="text-align: left">Цена</th><th style="text-align: left">Приближение №1</th><th style="text-align: left">Остаток №1</th><th style="text-align: left">Выход дерева №1</th><th style="text-align: left">Приближение №2</th><th style="text-align: left">Остаток №2</th></tr></thead><tbody>
+<tr><td style="text-align: left">25</td><td style="text-align: left">700</td><td style="text-align: left">560</td><td style="text-align: left">140</td><td style="text-align: left">140</td><td style="text-align: left">700</td><td style="text-align: left">0</td></tr>
+<tr><td style="text-align: left">50</td><td style="text-align: left">800</td><td style="text-align: left">560</td><td style="text-align: left">240</td><td style="text-align: left">140</td><td style="text-align: left">700</td><td style="text-align: left">100</td></tr>
+<tr><td style="text-align: left">75</td><td style="text-align: left">600</td><td style="text-align: left">560</td><td style="text-align: left">40</td><td style="text-align: left">140</td><td style="text-align: left">700</td><td style="text-align: left">-100</td></tr>
+<tr><td style="text-align: left">80</td><td style="text-align: left">400</td><td style="text-align: left">560</td><td style="text-align: left">-160</td><td style="text-align: left">-210</td><td style="text-align: left">350</td><td style="text-align: left">50</td></tr>
+<tr><td style="text-align: left">100</td><td style="text-align: left">300</td><td style="text-align: left">560</td><td style="text-align: left">-260</td><td style="text-align: left">-210</td><td style="text-align: left">350</td><td style="text-align: left">-50</td></tr>
+</tbody></table>
+</div>
+<p>Далее процесс продолжается: строим деревья дальше, изменяем приближение, считаем новые остатки.</p>
+<h3 id="Градиентный-бустинг-Формализация"><a class="header" href="#Градиентный-бустинг-Формализация">Градиентный бустинг: Формализация</a></h3>
+<p>На $t$-м шаге модель представляет собой сумму функций:
+$$f(x) = \sum_{i=0}^{t-1} f_i(x)$$</p>
+<p>Параметры нового шага находятся через минимизацию функции потерь $L$:
+$$\rho_t, \theta_t = \arg\min_{\rho, \theta} M_{x,y} [L(y, f(x) + \rho h(x, \theta))]$$
+где $f_t(x) = \rho_t h(x, \theta_t)$.</p>
+<p>Остаток на $i$-м элементе (градиент):
+$$r_{i,t} = - \left[ \frac{\nabla L(y_i, f(x_i))}{\nabla f(x_i)} \right]$$
+Мы хотим уменьшить этот остаток новой функцией.</p>
+<ol>
+<li>Параметры дерева: $\theta_t = \arg\min_{\theta} \sum_{i}^{n} (r_{i,t} - h(x_i, \theta))^2$</li>
+<li>Параметры «линейной регрессии» (шаг): $\rho_t = \arg\min_{\rho} \sum_{i}^{n} L(y_i, f(x_i) + \rho h(x_i, \theta_t))$</li>
+</ol>
+<p><strong>Случай MSE:</strong>
+Для среднеквадратичной ошибки остаток равен разнице между истинным значением и предсказанием:
+$$r_{i,t} = - \frac{\nabla L}{\nabla f} = -2(y_i - y_i) \rightarrow \text{разница между истинным значением и предсказанием}$$</p>
+<h3 id="Сравнение-Градиентного-бустинга-и-Бэггинга"><a class="header" href="#Сравнение-Градиентного-бустинга-и-Бэггинга">Сравнение Градиентного бустинга и Бэггинга</a></h3>
+<ul>
+<li><strong>Точность:</strong> Градиентный бустинг точнее, чем Bagging и Random Forest.</li>
+<li><strong>Переобучение:</strong> Бустинг любит переобучаться. Нужна тестовая выборка. Если переобучить дерево в начале цепочки, остальные деревья не смогут исправить это переобучение. Поэтому гиперпараметры деревьев выбирают так, чтобы они были достаточно «глупые».</li>
+<li><strong>Параллелизм:</strong> Деревья строятся последовательно. Параллелизм возможен только на уровне построения одного дерева (в отличие от Random Forest).</li>
+<li><strong>Линейные модели:</strong> С логистической регрессией работает нормально.</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="logistic-regression-and-trees.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="practicum/knn-task.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="logistic-regression-and-trees.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="practicum/knn-task.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
