@@ -91,7 +91,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro/intro.html">О книге</a></li><li class="chapter-item expanded affix "><a href="intro/about-me.html">О себе</a></li><li class="chapter-item expanded affix "><li class="part-title">Немного теории</li><li class="chapter-item expanded "><a href="overview.html"><strong aria-hidden="true">1.</strong> Введение</a></li><li class="chapter-item expanded "><a href="metric-algo.html"><strong aria-hidden="true">2.</strong> Метрические алгоритмы</a></li><li class="chapter-item expanded "><a href="linear-regression.html"><strong aria-hidden="true">3.</strong> Линейная регрессия</a></li><li class="chapter-item expanded "><a href="logistic-regression-and-trees.html"><strong aria-hidden="true">4.</strong> Логистическая регрессия и деревья</a></li><li class="chapter-item expanded "><a href="random-forest-and-gradient-boosting.html"><strong aria-hidden="true">5.</strong> Случайный лес и градиентный бустинг</a></li><li class="chapter-item expanded affix "><li class="part-title">Работаем самостоятельно</li><li class="chapter-item expanded "><a href="practicum/knn-task.html"><strong aria-hidden="true">6.</strong> Свой kNN</a></li><li class="chapter-item expanded "><a href="practicum/linear-regression-task.html"><strong aria-hidden="true">7.</strong> Своя линейная регрессия</a></li><li class="chapter-item expanded "><a href="practicum/logistic-regression-task.html"><strong aria-hidden="true">8.</strong> Своя логистическая регрессия</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro/intro.html">О книге</a></li><li class="chapter-item expanded affix "><a href="intro/about-me.html">О себе</a></li><li class="chapter-item expanded affix "><li class="part-title">Немного теории</li><li class="chapter-item expanded "><a href="overview.html"><strong aria-hidden="true">1.</strong> Введение</a></li><li class="chapter-item expanded "><a href="metric-algo.html"><strong aria-hidden="true">2.</strong> Метрические алгоритмы</a></li><li class="chapter-item expanded "><a href="linear-regression.html"><strong aria-hidden="true">3.</strong> Линейная регрессия</a></li><li class="chapter-item expanded "><a href="logistic-regression-and-trees.html"><strong aria-hidden="true">4.</strong> Логистическая регрессия и деревья</a></li><li class="chapter-item expanded "><a href="random-forest-and-gradient-boosting.html"><strong aria-hidden="true">5.</strong> Случайный лес и градиентный бустинг</a></li><li class="chapter-item expanded affix "><li class="part-title">Работаем самостоятельно</li><li class="chapter-item expanded "><a href="practicum/knn-task.html"><strong aria-hidden="true">6.</strong> Свой kNN</a></li><li class="chapter-item expanded "><a href="practicum/linear-regression-task.html"><strong aria-hidden="true">7.</strong> Своя линейная регрессия</a></li><li class="chapter-item expanded "><a href="practicum/logistic-regression-task.html"><strong aria-hidden="true">8.</strong> Своя логистическая регрессия</a></li><li class="chapter-item expanded affix "><li class="part-title">Отвечаем на вопросы</li><li class="chapter-item expanded "><a href="questions-and-answers.html"><strong aria-hidden="true">9.</strong> Вопросы и ответы</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -972,6 +972,26 @@ $$r_{i,t} = - \frac{\nabla L}{\nabla f} = -2(y_i - y_i) \rightarrow \text{раз
 <p>Реализуйте алгоритм логистической регрессии с нуля.</p>
 <p>Сравнить результаты с реализацией из <code>sklearn</code>, проанализировать влияние гиперпараметров.</p>
 <p><a href="https://github.com/phys-dev/logistic-regression-task">Ссылка на репозиторий</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="Вопросы-и-ответы-по-машинному-обучению"><a class="header" href="#Вопросы-и-ответы-по-машинному-обучению">Вопросы и ответы по машинному обучению</a></h1>
+<h2 id="Вопросы"><a class="header" href="#Вопросы">Вопросы</a></h2>
+<p>Эти вопросы могут быть полезны для проверки понимания основ машинного обучения.
+Вопросы можно использовать для самопроверки или в качестве материала для обсуждения.</p>
+<ol>
+<li>К чему обычно применяется предположение i.i.d. (независимые одинаково распределенные)?</li>
+<li>Изменятся ли предсказания алгоритма kNN, если один из признаков (цены в рублях) перевести в евро, при прочих равных?</li>
+<li>Какой способ регуляризации в линейной регрессии имеет тенденцию к "отбору признаков"?</li>
+<li>Как выглядит аналитическое решение линейной регрессии с ошибкой MSE?</li>
+<li>К чему приведет домножение всех значений признаков в обучающей выборке на 10 для различных вариантов линейных моделей (MSE, MAE, с L2-регуляризацией)?</li>
+<li>После обучения на очень большой выборке линейная регрессия (в режиме inference) работает быстрее или медленнее kNN?</li>
+<li>Для каких моделей могут быть полезны методы L1 и L2 регуляризации?</li>
+<li>Какие утверждения о логистической регрессии верны?</li>
+<li>Что предсказывает решающее дерево в задаче регрессии в каждом листе?</li>
+<li>Как решающие деревья обрабатывают пропуски в данных?</li>
+<li>Повлияет ли добавление большого количества признаков, скоррелированных с уже существующим, на процесс построения ансамбля типа бустинга из деревьев?</li>
+<li>Что позволяет получить бустинг над линейными регрессиями?</li>
+<li>Какое требование к функции потерь предъявляет градиентный бустинг?</li>
+<li>...</li>
+</ol>
 
                     </main>
 
