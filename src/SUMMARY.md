@@ -8,10 +8,12 @@
 - [Метрические алгоритмы](./metric-algo.md)
 - [Линейная регрессия](./linear-regression.md)
 - [Логистическая регрессия и деревья](./logistic-regression-and-trees.md)
+- [Случайный лес и градиентный бустинг](./random-forest-and-gradient-boosting.md)
 
 # Работаем самостоятельно
 
 - [Свой kNN](./practicum/knn-task.md)
 - [Своя линейная регрессия](./practicum/linear-regression-task.md)
 - [Своя логистическая регрессия](./practicum/logistic-regression-task.md)
+
 
