@@ -10,6 +10,7 @@
 - [Логистическая регрессия и деревья](./logistic-regression-and-trees.md)
 - [Случайный лес и градиентный бустинг](./random-forest-and-gradient-boosting.md)
 - [Понижение размерности и кластеризация](./dimensionality-reduction-and-clustering.md)
+- [Нейронные сети](./neural-networks.md)
 
 # Работаем самостоятельно
 
