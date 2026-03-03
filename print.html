@@ -91,7 +91,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro/intro.html">О книге</a></li><li class="chapter-item expanded affix "><a href="intro/about-me.html">О себе</a></li><li class="chapter-item expanded affix "><li class="part-title">Немного теории</li><li class="chapter-item expanded "><a href="overview.html"><strong aria-hidden="true">1.</strong> Введение</a></li><li class="chapter-item expanded "><a href="metric-algo.html"><strong aria-hidden="true">2.</strong> Метрические алгоритмы</a></li><li class="chapter-item expanded "><a href="linear-regression.html"><strong aria-hidden="true">3.</strong> Линейная регрессия</a></li><li class="chapter-item expanded "><a href="logistic-regression-and-trees.html"><strong aria-hidden="true">4.</strong> Логистическая регрессия и деревья</a></li><li class="chapter-item expanded "><a href="random-forest-and-gradient-boosting.html"><strong aria-hidden="true">5.</strong> Случайный лес и градиентный бустинг</a></li><li class="chapter-item expanded affix "><li class="part-title">Работаем самостоятельно</li><li class="chapter-item expanded "><a href="practicum/knn-task.html"><strong aria-hidden="true">6.</strong> Свой kNN</a></li><li class="chapter-item expanded "><a href="practicum/linear-regression-task.html"><strong aria-hidden="true">7.</strong> Своя линейная регрессия</a></li><li class="chapter-item expanded "><a href="practicum/logistic-regression-task.html"><strong aria-hidden="true">8.</strong> Своя логистическая регрессия</a></li><li class="chapter-item expanded affix "><li class="part-title">Отвечаем на вопросы</li><li class="chapter-item expanded "><a href="questions-and-answers.html"><strong aria-hidden="true">9.</strong> Вопросы и ответы</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro/intro.html">О книге</a></li><li class="chapter-item expanded affix "><a href="intro/about-me.html">О себе</a></li><li class="chapter-item expanded affix "><li class="part-title">Немного теории</li><li class="chapter-item expanded "><a href="overview.html"><strong aria-hidden="true">1.</strong> Введение</a></li><li class="chapter-item expanded "><a href="metric-algo.html"><strong aria-hidden="true">2.</strong> Метрические алгоритмы</a></li><li class="chapter-item expanded "><a href="linear-regression.html"><strong aria-hidden="true">3.</strong> Линейная регрессия</a></li><li class="chapter-item expanded "><a href="logistic-regression-and-trees.html"><strong aria-hidden="true">4.</strong> Логистическая регрессия и деревья</a></li><li class="chapter-item expanded "><a href="random-forest-and-gradient-boosting.html"><strong aria-hidden="true">5.</strong> Случайный лес и градиентный бустинг</a></li><li class="chapter-item expanded "><a href="dimensionality-reduction-and-clustering.html"><strong aria-hidden="true">6.</strong> Понижение размерности и кластеризация</a></li><li class="chapter-item expanded affix "><li class="part-title">Работаем самостоятельно</li><li class="chapter-item expanded "><a href="practicum/knn-task.html"><strong aria-hidden="true">7.</strong> Свой kNN</a></li><li class="chapter-item expanded "><a href="practicum/linear-regression-task.html"><strong aria-hidden="true">8.</strong> Своя линейная регрессия</a></li><li class="chapter-item expanded "><a href="practicum/logistic-regression-task.html"><strong aria-hidden="true">9.</strong> Своя логистическая регрессия</a></li><li class="chapter-item expanded affix "><li class="part-title">Отвечаем на вопросы</li><li class="chapter-item expanded "><a href="questions-and-answers.html"><strong aria-hidden="true">10.</strong> Вопросы и ответы</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -791,7 +791,7 @@ $$</li>
 <li>Ансамбли деревьев (Random Forest, Gradient Boosting).</li>
 <li>Методы улучшения стабильности и качества деревьев.</li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="Глава-4-Деревья-Случайный-лес-Градиентный-бустинг"><a class="header" href="#Глава-4-Деревья-Случайный-лес-Градиентный-бустинг">Глава 4. Деревья. Случайный лес. Градиентный бустинг</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="Деревья-Случайный-лес-Градиентный-бустинг"><a class="header" href="#Деревья-Случайный-лес-Градиентный-бустинг">Деревья. Случайный лес. Градиентный бустинг</a></h1>
 <h2 id="Введение-1"><a class="header" href="#Введение-1">Введение</a></h2>
 <p>В данной главе рассматриваются методы анализа больших массивов данных, основанные на деревьях решений и их ансамблях. Мы изучим регрессионные деревья, проблему смещения и разброса (bias-variance), а также методы объединения моделей: бэггинг (Bagging), случайный лес (Random Forest) и бустинг (Boosting), включая градиентный бустинг.</p>
 <h2 id="1-Деревья-решений"><a class="header" href="#1-Деревья-решений">1. Деревья решений</a></h2>
@@ -948,6 +948,123 @@ $$r_{i,t} = - \frac{\nabla L}{\nabla f} = -2(y_i - y_i) \rightarrow \text{раз
 <li><strong>Параллелизм:</strong> Деревья строятся последовательно. Параллелизм возможен только на уровне построения одного дерева (в отличие от Random Forest).</li>
 <li><strong>Линейные модели:</strong> С логистической регрессией работает нормально.</li>
 </ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="Понижение-размерности-Кластеризация"><a class="header" href="#Понижение-размерности-Кластеризация">Понижение размерности. Кластеризация</a></h1>
+<p>В данной главе рассматриваются методы работы с данными, направленные на уменьшение количества признаков при сохранении структуры данных (понижение размерности), а также методы автоматического grouping объектов без учителя (кластеризация). Мы изучим метод главных компонент (PCA), t-SNE, алгоритмы k-средних, иерархическую кластеризацию и DBSCAN.</p>
+<h2 id="1-Понижение-размерности"><a class="header" href="#1-Понижение-размерности">1. Понижение размерности</a></h2>
+<h3 id="Основная-идея"><a class="header" href="#Основная-идея">Основная идея</a></h3>
+<p>Главная задача понижения размерности — сохранить расстояния между точками при переходе к пространству меньшей размерности. Точки, которые были близкими (или далёкими) в пространстве высокой размерности, должны оставаться близкими (или далёкими) в пространстве меньшей размерности.</p>
+<h3 id="Метод-главных-компонент-pca"><a class="header" href="#Метод-главных-компонент-pca">Метод главных компонент (PCA)</a></h3>
+<p>Простое отрезание оси пространства почти всегда не оптимально: в худшем случае проекция превратится в точку.</p>
+<p><strong>Основная концепция:</strong></p>
+<ol>
+<li>Предполагается, что данные описываются неким эллипсом.</li>
+<li>Меняется базис пространства.</li>
+<li>Отрезается «новая ось» с минимальной дисперсией.</li>
+<li>Чтобы посчитать «потерянную информацию», делят дисперсию отрезанной оси на сумму дисперсий по всем осям.</li>
+</ol>
+<p><strong>Вычисления:</strong>
+Ковариация признаков вычисляется по формуле:
+$$cov(X_i, X_j) = M[(X_i - M[X_i])(X_j - M[X_j])] = M[X_i X_j] - M[X_i]M[X_j]$$</p>
+<p>Выборку можно переместить так, чтобы математическое ожидание $M[X_i] = 0$. В матричном виде ковариация:
+$$cov(X) = X^T X$$</p>
+<p>Свойства:</p>
+<ul>
+<li>Ковариация симметрична.</li>
+<li>Ковариация признака с самим собой равна его дисперсии.</li>
+<li>Направление оси с максимальной дисперсией совпадает с направлением собственного вектора с максимальным собственным значением.</li>
+<li>Собственное значение в этом случае равно дисперсии.</li>
+</ul>
+<p><strong>Ограничения PCA:</strong></p>
+<ul>
+<li>Необходимо стандартизировать выборку.</li>
+<li>Не работает со сложными структурами, не похожими на эллипс.</li>
+</ul>
+<h3 id="t-sne-t-distributed-stochastic-neighbor-embedding"><a class="header" href="#t-sne-t-distributed-stochastic-neighbor-embedding">t-SNE (t-Distributed Stochastic Neighbor Embedding)</a></h3>
+<p><strong>Физический смысл:</strong></p>
+<ol>
+<li>Данные из пространства размерности $N$ помещаются в пространство меньшей размерности $M$ (отображение).</li>
+<li>Объекты «прибиваются гвоздями» к своим местам.</li>
+<li>Объекты в пространстве $M$ соединяются пружинками. Сила пружины зависит от того, насколько расстояние в пространстве $M$ отличается от расстояния в пространстве $N$.</li>
+<li>Система «отпускается» (гвозди убираются).</li>
+</ol>
+<p><strong>Динамика:</strong></p>
+<ul>
+<li>Если точки в пространстве $M$ дальше, чем в пространстве $N$, то они притягиваются.</li>
+<li>Если точки в пространстве $M$ ближе, чем в пространстве $N$, то они отталкиваются.</li>
+</ul>
+<p><strong>Математическое описание:</strong>
+Пусть $|x_i - x_j|$ — расстояние в исходном пространстве, $|y_i - y_j|$ — расстояние в пространстве отображения.</p>
+<p>Условное сходство (Гауссово распределение):
+$$p_{j|i} = \frac{e^{-|x_i - x_j|^2 / 2\sigma_i^2}}{\sum_{k \neq i} e^{-|x_i - x_k|^2 / 2\sigma_i^2}}$$
+где $\sigma_i^2$ — дисперсия распределения Гаусса вокруг точки $x_i$. Разные распределения берутся для точек в плотных и разреженных участках.</p>
+<p>Симметричное сходство:
+$$p_{ji} = \frac{p_{j|i} + p_{i|j}}{2N}$$</p>
+<p>В пространстве меньшей размерности используется не Гауссово, а распределение Стьюдента с одной степенью свободы (t-distribution):
+$$q_{ij} = \frac{t(|y_i - y_j|)}{\sum_{k \neq i} t(|y_i - y_k|)}, \text{ где } t(x) = \frac{1}{1 + x^2}$$</p>
+<p><strong>Оптимизация:</strong>
+Необходимо приблизить матрицу сходства отображения к матрице исходного пространства. Минимизируется расстояние Кульбака-Лейблера:
+$$KL(P||Q) = \sum_{i,j} p_{ij} \log \frac{p_{ij}}{q_{ij}} \to \min$$</p>
+<p>Минимизация производится методом градиентного спуска. Градиент является совокупностью всех сил, действующих на объект:
+$$\frac{\partial KL(P||Q)}{\partial y_i} = 4 \sum_j (p_{ij} - q_{ij}) t(|x_i - x_j|) u_{ij}$$
+где $u_{ij}$ — единичный вектор.</p>
+<p><strong>Почему t-distribution?</strong>
+При понижении размерности максимальные расстояния «меняются». Если использовать распределение Гаусса, то точки отображаются очень скученно (crowding problem).</p>
+<p><strong>Особенности t-SNE:</strong></p>
+<ul>
+<li>Работает со сложными структурами.</li>
+<li>При появлении новых данных нет возможности просто спроецировать их. Нужно либо полностью переобучаться, либо использовать «хитрости» (например, k-nn).</li>
+<li>Долго считать. Можно брать не все точки, а только ближайших соседей.
+<ul>
+<li>Если брать мало соседей, t-SNE больше учитывает локальные паттерны.</li>
+<li>Если брать много соседей, t-SNE больше учитывает глобальные паттерны.</li>
+</ul>
+</li>
+</ul>
+<h3 id="autoencoders"><a class="header" href="#autoencoders">Autoencoders</a></h3>
+<p>...</p>
+<h2 id="2-Кластеризация"><a class="header" href="#2-Кластеризация">2. Кластеризация</a></h2>
+<h3 id="k-средних-k-means"><a class="header" href="#k-средних-k-means">k-средних (k-means)</a></h3>
+<p>Алгоритм заключается в следующем:</p>
+<ol>
+<li>Задать количество кластеров.</li>
+<li>Бросить случайным образом точки (центроиды) в пространстве.</li>
+<li>Для каждой точки посчитать, к какому центроиду она ближе.</li>
+<li>Передвинуть каждый центроид в «центры масс» подвыборки, принадлежащих этому центроиду.</li>
+<li>Повторять пункты 3-4 фиксированное число раз, или пока перемещение центроидов не будет достаточно маленьким (алгоритм сойдётся).</li>
+</ol>
+<p><strong>Особенности и ограничения:</strong></p>
+<ul>
+<li>Нужно задавать количество кластеров. Для подбора можно смотреть на сумму расстояний от точек до центров кластеров. Если сумма перестаёт резко падать, можно останавливаться.</li>
+<li>Чувствителен к начальным случайным значениям.</li>
+<li>Есть ограничения на форму кластеров.</li>
+<li>Требует много вычислений.</li>
+</ul>
+<h3 id="Агломеративная-иерархическая-кластеризация"><a class="header" href="#Агломеративная-иерархическая-кластеризация">Агломеративная (иерархическая) кластеризация</a></h3>
+<p>Алгоритм «снизу-вверх»:</p>
+<ol>
+<li>Сначала каждая точка — центр своего кластера.</li>
+<li>Считаем попарные расстояния между центрами кластеров.</li>
+<li>Склеиваем пару ближайших кластеров в новый кластер и пересчитываем его центр.</li>
+<li>Повторяем пункты 2-3, пока не склеим все в один кластер.</li>
+</ol>
+<h3 id="dbscan"><a class="header" href="#dbscan">DBSCAN</a></h3>
+<p>Алгоритм, основанный на плотности:</p>
+<ol>
+<li>Берём случайную точку.</li>
+<li>Если у неё меньше $N$ соседей, то помечаем её как потенциальный выброс (noise point), и берём другую точку.</li>
+<li>Если соседей больше $N$:
+<ul>
+<li>Заводим новый кластер и помещаем точку (core point) в него.</li>
+<li>Если сосед — потенциальный выброс или у него мало соседей, то это край кластера (border point). Заносим его в кластер и идём к другому соседу.</li>
+<li>Если у соседа достаточно его собственных соседей, то добавляем его в кластер (core point), а его соседей заносим в очередь обхода.</li>
+</ul>
+</li>
+<li>Повторяем пункты 1-3.</li>
+<li>Выбросы выделяем в отдельный кластер.</li>
+</ol>
+<h2 id="3-Заключение"><a class="header" href="#3-Заключение">3. Заключение</a></h2>
+<p>В данной главе были рассмотрены ключевые методы уменьшения размерности данных и методы кластеризации без учителя.</p>
+<p>В следующих лекциях планируется рассмотрение нейронных сетей.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="Задача-Реализация-knn-классификатора-с-нуля"><a class="header" href="#Задача-Реализация-knn-классификатора-с-нуля">Задача: Реализация KNN-классификатора "с нуля"</a></h1>
 <p>Напишите собственный класс, который реализует алгоритм k ближайших соседей для классификации.</p>
 <p>Класс должен поддерживать:</p>
