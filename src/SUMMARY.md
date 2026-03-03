@@ -17,6 +17,7 @@
 - [Свой kNN](./practicum/knn-task.md)
 - [Своя линейная регрессия](./practicum/linear-regression-task.md)
 - [Своя логистическая регрессия](./practicum/logistic-regression-task.md)
+- [Kaggle-соревнование для начинающих](./practicum/kaggle-getting-started-task.md)
 
 # Отвечаем на вопросы
 
