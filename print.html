@@ -91,7 +91,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro/intro.html">О книге</a></li><li class="chapter-item expanded affix "><a href="intro/about-me.html">О себе</a></li><li class="chapter-item expanded affix "><li class="part-title">Немного теории</li><li class="chapter-item expanded "><a href="overview.html"><strong aria-hidden="true">1.</strong> Введение</a></li><li class="chapter-item expanded "><a href="metric-algo.html"><strong aria-hidden="true">2.</strong> Метрические алгоритмы</a></li><li class="chapter-item expanded "><a href="linear-regression.html"><strong aria-hidden="true">3.</strong> Линейная регрессия</a></li><li class="chapter-item expanded "><a href="logistic-regression-and-trees.html"><strong aria-hidden="true">4.</strong> Логистическая регрессия и деревья</a></li><li class="chapter-item expanded "><a href="random-forest-and-gradient-boosting.html"><strong aria-hidden="true">5.</strong> Случайный лес и градиентный бустинг</a></li><li class="chapter-item expanded "><a href="dimensionality-reduction-and-clustering.html"><strong aria-hidden="true">6.</strong> Понижение размерности и кластеризация</a></li><li class="chapter-item expanded affix "><li class="part-title">Работаем самостоятельно</li><li class="chapter-item expanded "><a href="practicum/knn-task.html"><strong aria-hidden="true">7.</strong> Свой kNN</a></li><li class="chapter-item expanded "><a href="practicum/linear-regression-task.html"><strong aria-hidden="true">8.</strong> Своя линейная регрессия</a></li><li class="chapter-item expanded "><a href="practicum/logistic-regression-task.html"><strong aria-hidden="true">9.</strong> Своя логистическая регрессия</a></li><li class="chapter-item expanded affix "><li class="part-title">Отвечаем на вопросы</li><li class="chapter-item expanded "><a href="questions-and-answers.html"><strong aria-hidden="true">10.</strong> Вопросы и ответы</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro/intro.html">О книге</a></li><li class="chapter-item expanded affix "><a href="intro/about-me.html">О себе</a></li><li class="chapter-item expanded affix "><li class="part-title">Немного теории</li><li class="chapter-item expanded "><a href="overview.html"><strong aria-hidden="true">1.</strong> Введение</a></li><li class="chapter-item expanded "><a href="metric-algo.html"><strong aria-hidden="true">2.</strong> Метрические алгоритмы</a></li><li class="chapter-item expanded "><a href="linear-regression.html"><strong aria-hidden="true">3.</strong> Линейная регрессия</a></li><li class="chapter-item expanded "><a href="logistic-regression-and-trees.html"><strong aria-hidden="true">4.</strong> Логистическая регрессия и деревья</a></li><li class="chapter-item expanded "><a href="random-forest-and-gradient-boosting.html"><strong aria-hidden="true">5.</strong> Случайный лес и градиентный бустинг</a></li><li class="chapter-item expanded "><a href="dimensionality-reduction-and-clustering.html"><strong aria-hidden="true">6.</strong> Понижение размерности и кластеризация</a></li><li class="chapter-item expanded "><a href="neural-networks.html"><strong aria-hidden="true">7.</strong> Нейронные сети</a></li><li class="chapter-item expanded affix "><li class="part-title">Работаем самостоятельно</li><li class="chapter-item expanded "><a href="practicum/knn-task.html"><strong aria-hidden="true">8.</strong> Свой kNN</a></li><li class="chapter-item expanded "><a href="practicum/linear-regression-task.html"><strong aria-hidden="true">9.</strong> Своя линейная регрессия</a></li><li class="chapter-item expanded "><a href="practicum/logistic-regression-task.html"><strong aria-hidden="true">10.</strong> Своя логистическая регрессия</a></li><li class="chapter-item expanded affix "><li class="part-title">Отвечаем на вопросы</li><li class="chapter-item expanded "><a href="questions-and-answers.html"><strong aria-hidden="true">11.</strong> Вопросы и ответы</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -1065,6 +1065,153 @@ $$\frac{\partial KL(P||Q)}{\partial y_i} = 4 \sum_j (p_{ij} - q_{ij}) t(|x_i - x
 <h2 id="3-Заключение"><a class="header" href="#3-Заключение">3. Заключение</a></h2>
 <p>В данной главе были рассмотрены ключевые методы уменьшения размерности данных и методы кластеризации без учителя.</p>
 <p>В следующих лекциях планируется рассмотрение нейронных сетей.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="Введение-в-нейронные-сети"><a class="header" href="#Введение-в-нейронные-сети">Введение в нейронные сети</a></h1>
+<p>В данной главе рассматриваются основы построения и обучения нейронных сетей. Мы изучим математическую модель нейрона, роль функций активации, архитектуру многослойных сетей и метод обратного распространения ошибки (backpropagation). Также будут рассмотрены методы оптимизации (SGD, Adam, RMSProp), техники нормализации данных и весов, а также методы регуляризации для борьбы с переобучением.</p>
+<h2 id="1-Нейрон-и-функции-активации"><a class="header" href="#1-Нейрон-и-функции-активации">1. Нейрон и функции активации</a></h2>
+<h3 id="Математический-нейрон"><a class="header" href="#Математический-нейрон">Математический нейрон</a></h3>
+<p>Математический нейрон концептуально похож на биологический. Он принимает входные сигналы, умножает их на веса и пропускает через функцию активации.</p>
+<p>Рассмотрим пример задачи: предсказать, сдаст ли студент экзамен исходя из следующих признаков:</p>
+<ul>
+<li>$X_1$ — Задавал вопросы на парах (1/0).</li>
+<li>$X_2$ — Попал к лектору на экзамене (1/0).</li>
+<li>$X_3$ — Сдал лабы (1/0).</li>
+</ul>
+<p>Логика задачи может быть следующей:</p>
+<ul>
+<li>Если студент попал к лектору, то он сдаст экзамен только если задавал вопросы и сдал лабы.</li>
+<li>Если студент не попал к лектору, то для сдачи достаточно или задавать вопросы, или сдать лабы.</li>
+</ul>
+<p>Модель нейрона вычисляет взвешенную сумму входов:
+$$S = W_1X_1 + W_2X_2 + W_3X_3$$</p>
+<p>Выход нейрона $Y$ определяется пороговой функцией активации:
+$$f(x) = \begin{cases} 1, &amp; x \ge 0.5 \ 0, &amp; x &lt; 0.5 \end{cases}$$</p>
+<p>Пример весов для простой логики: $W_1 = 0.5, W_2 = -0.5, W_3 = 0.5$.
+Для входа $(1, 1, 1)$: $0.5 \cdot 1 - 0.5 \cdot 1 + 0.5 \cdot 1 = 0.5 \ge 0.5 \rightarrow$ сдал (1).</p>
+<h3 id="Проблема-одного-слоя"><a class="header" href="#Проблема-одного-слоя">Проблема одного слоя</a></h3>
+<p>Однослойная модель (персептрон) не может решить задачи, где ответ зависит от сложной комбинации пар признаков (например, если лектор не любит студентов, которые задавали вопросы, но сданные лабы повышают шанс). Для таких задач сложно подобрать веса в модели с одним слоем.</p>
+<h3 id="Скрытые-слои"><a class="header" href="#Скрытые-слои">Скрытые слои</a></h3>
+<p>Решением является добавление скрытых слоев. Скрытые слои ($Z$) формируют новое признаковое пространство, в котором задача решается проще.
+$$Z_1 = f(W_{11,1}X_1 + W_{12,1}X_2 + \dots)$$
+$$Y_1 = f(W_{21,1}Z_1 + W_{22,1}Z_2 + \dots)$$</p>
+<h3 id="Функции-активации"><a class="header" href="#Функции-активации">Функции активации</a></h3>
+<p>Для обучения сети методом градиентного спуска функции активации должны быть дифференцируемы.</p>
+<ul>
+<li><strong>Пороговая функция:</strong> Используется в биологических моделях, но не дифференцируема в точке порога.</li>
+<li><strong>Сигмоида:</strong> Дифференцируемая функция.
+$$f(x) = \frac{1}{1 + e^{-x}}$$
+Производная сигмоиды:
+$$\frac{d\sigma(x)}{dx} = \sigma(x)(1 - \sigma(x))$$</li>
+</ul>
+<h2 id="2-Обучение-нейронной-сети"><a class="header" href="#2-Обучение-нейронной-сети">2. Обучение нейронной сети</a></h2>
+<h3 id="Обучение-одного-нейрона"><a class="header" href="#Обучение-одного-нейрона">Обучение одного нейрона</a></h3>
+<p>Обучение одного нейрона с сигмоидальной функцией активации аналогично обучению логистической регрессии. Обучаемыми параметрами являются веса $W$.</p>
+<h3 id="Метод-обратного-распространения-ошибки-backpropagation"><a class="header" href="#Метод-обратного-распространения-ошибки-backpropagation">Метод обратного распространения ошибки (Backpropagation)</a></h3>
+<p>Для пересчета весов в многослойной сети необходимо знать ошибку для каждого нейрона. Ошибка для выходного слоя $Y_1$ считается легко, но для скрытых слоев $Z$ требуется метод обратного распространения.</p>
+<p><strong>Цепное правило (Chain Rule):</strong>
+$$\frac{dz}{dx} = \frac{dz}{dy} \cdot \frac{dy}{dx}$$</p>
+<p><strong>Пример вычисления градиента:</strong>
+Пусть есть функция $f(x, y, z) = (x + y)z$.</p>
+<ol>
+<li>$q = x + y$. Производные: $\frac{dq}{dx} = 1, \frac{dq}{dy} = 1$.</li>
+<li>$f = zq$. Производные: $\frac{df}{dq} = z, \frac{df}{dz} = q$.</li>
+<li>Итоговые градиенты: $\frac{df}{dx} = \frac{df}{dq} \cdot \frac{dq}{dx} = z \cdot 1$.</li>
+</ol>
+<p><strong>Обновление весов:</strong>
+Ошибка вычисляется как разность между_actual_ и <em>expected</em>.
+$$err = actual - expected$$
+Для сигмоиды градиент веса включает производную функции активации:
+$$weights_delta = err \cdot \sigma(x) \cdot (1 - \sigma(x))$$
+Обновление веса с learning rate ($lr$):
+$$weight_{new} = weight_{old} - output \cdot weights_delta \cdot lr$$</p>
+<p>Ошибка для скрытых слоев распределяется пропорционально весам, связывающим их с последующим слоем:
+$$err_{hidden} = weight \cdot weights_delta$$</p>
+<h3 id="Проблемы-сигмоиды"><a class="header" href="#Проблемы-сигмоиды">Проблемы сигмоиды</a></h3>
+<ul>
+<li>Маленькие градиенты на концах функции (проблема затухающего градиента).</li>
+<li>Всегда положительная.</li>
+<li>Дорого считать экспоненту.</li>
+</ul>
+<h2 id="3-Оптимизаторы"><a class="header" href="#3-Оптимизаторы">3. Оптимизаторы</a></h2>
+<p>Для минимизации функции потерь используются различные варианты градиентного спуска.</p>
+<h3 id="sgd-stochastic-gradient-descent"><a class="header" href="#sgd-stochastic-gradient-descent">SGD (Stochastic Gradient Descent)</a></h3>
+<p>Базовый метод:
+$$x_{t+1} = x_t - \alpha f'(x_t)$$
+где $\alpha$ — learning rate.</p>
+<h3 id="sgd-with-momentum"><a class="header" href="#sgd-with-momentum">SGD with Momentum</a></h3>
+<p>Накапливает инерцию движения, чтобы сглаживать колебания:
+$$v_{t+1} = \rho v_t + \alpha f'(x_t)$$
+$$x_{t+1} = x_t - v_{t+1}$$</p>
+<h3 id="nesterov-momentum"><a class="header" href="#nesterov-momentum">Nesterov Momentum</a></h3>
+<p>Улучшенная версия momentum, которая «смотрит вперед» перед вычислением градиента. Меньше «заносит на поворотах»:
+$$v_{t+1} = \rho v_t - \alpha f'(x_t + \rho v_t)$$
+$$x_{t+1} = x_t + v_{t+1}$$</p>
+<h3 id="adagrad-adaptive-gradient"><a class="header" href="#adagrad-adaptive-gradient">Adagrad (Adaptive Gradient)</a></h3>
+<p>Адаптирует learning rate для каждого параметра индивидуально. Веса, которые менялись сильно, меняются меньше:
+$$cache_{t+1} = cache_t + f'(x_t)^2$$
+$$x_{t+1} = x_t - \frac{\alpha f'(x_t)}{\sqrt{cache_{t+1}} + \epsilon}$$
+<em>Проблема:</em> $cache \to \infty$, что может остановить обучение.</p>
+<h3 id="rmsprop"><a class="header" href="#rmsprop">RMSProp</a></h3>
+<p>Сглаживает изменения кэша, забывая старые значения (экспоненциальное скользящее среднее):
+$$cache_{t+1} = \beta cache_t + (1 - \beta) f'(x_t)^2, \quad \beta \in [0, 1]$$
+$$x_{t+1} = x_t - \frac{\alpha f'(x_t)}{\sqrt{cache_{t+1}} + \epsilon}$$</p>
+<h3 id="adam"><a class="header" href="#adam">Adam</a></h3>
+<p>Комбинация RMSProp и Momentum:
+$$v_{t+1} = \gamma v_t + (1 - \gamma) f'(x_t)$$
+$$cache_{t+1} = \beta cache_t + (1 - \beta) f'(x_t)^2$$
+$$x_{t+1} = x_t - \frac{\alpha v_{t+1}}{\sqrt{cache_{t+1}} + \epsilon}$$
+В качестве бэйзлайна рекомендуется использовать Adam или Nesterov.</p>
+<h2 id="4-Нормализация-и-инициализация"><a class="header" href="#4-Нормализация-и-инициализация">4. Нормализация и инициализация</a></h2>
+<h3 id="Нормализация-данных"><a class="header" href="#Нормализация-данных">Нормализация данных</a></h3>
+<p>Необходима по следующим причинам:</p>
+<ul>
+<li>Технические ограничения точности дробных чисел.</li>
+<li>Без нормализации страдают L1 и L2 регуляризация.</li>
+<li>Ускоряет обучение.
+В нейронных сетях это критично, так как каждый слой отображает данные в новое пространство признаков, и при изменении весов меняется распределение новых признаков.</li>
+</ul>
+<h3 id="Инициализация-весов"><a class="header" href="#Инициализация-весов">Инициализация весов</a></h3>
+<ul>
+<li><strong>Нули:</strong> Сеть не обучается (все нейроны одинаковы).</li>
+<li><strong>Константа:</strong> Сеть вырождается в один нейрон.</li>
+<li><strong>Случайные значения:</strong> Необходимо сохранять дисперсию данных после прохождения через слой.</li>
+</ul>
+<p>Для сохранения дисперсии (например, для ReLU):
+$$D(s) = D\left(\sum_{i}^{N} w_i x_i\right) = \sum_{i}^{N} D(w_i x_i) = n D(w) D(x)$$
+Чтобы $D(s) = D(x)$, необходимо:
+$$D(w) = \frac{1}{n}$$
+Берем случайные значения и умножаем на $\frac{1}{\sqrt{n}}$ (или используем распределение с дисперсией $1/n$).</p>
+<h3 id="batch-normalization"><a class="header" href="#batch-normalization">Batch Normalization</a></h3>
+<p>Позволяет преобразовывать данные после прохождения функции активации в пределах одного батча, чтобы бороться с изменением распределения признаков (Internal Covariate Shift).</p>
+<p>Формула нормализации:
+$$\hat{x}_i = \frac{x_i - \mu}{\sqrt{\sigma^2}}$$
+где $\mu$ и $\sigma^2$ — матожидание и дисперсия в батче.</p>
+<p>Далее применяется масштабирующее преобразование с обучаемыми параметрами $\gamma, \beta$:
+$$y_i = \gamma \hat{x}_i + \beta$$</p>
+<p>Для инференса используются скользящие средние статистики:
+$$\mu_{t+1} = \alpha \times \mu_{batch} + (1 - \alpha) \mu_t$$
+$$\sigma^2_{t+1} = \alpha \times \sigma^2_{batch} + (1 - \alpha) \sigma^2_t$$</p>
+<p>Batch normalization позволяет ускорить сходимость сети и использовать больший learning rate.</p>
+<h2 id="5-Регуляризация"><a class="header" href="#5-Регуляризация">5. Регуляризация</a></h2>
+<h3 id="l1-и-l2-регуляризация"><a class="header" href="#l1-и-l2-регуляризация">L1 и L2 регуляризация</a></h3>
+<p>Штраф за большие веса позволяет бороться с переобучением:</p>
+<ul>
+<li><strong>L2:</strong> $|W|_2^2 = \sum w^2$</li>
+<li><strong>L1:</strong> $|W|_1 = \sum |w|$</li>
+<li><strong>Elastic Net:</strong> Комбинация L1 и L2.</li>
+</ul>
+<h3 id="dropout"><a class="header" href="#dropout">Dropout</a></h3>
+<p>Случайным образом «выключает» некоторые нейроны в процессе обучения. На каждой итерации выключаются разные нейроны.</p>
+<ul>
+<li><strong>Интерпретация:</strong> Уменьшение количества признаков.</li>
+<li><strong>Инференс:</strong> Когда в продакшене включаем все нейроны, необходимо нормировать выходы на долю нейронов, которые мы отключали во время обучения, чтобы сохранить распределение.</li>
+</ul>
+<h3 id="residual-connection-Остаточные-связи"><a class="header" href="#residual-connection-Остаточные-связи">Residual Connection (Остаточные связи)</a></h3>
+<p>В очень глубоких сетях градиент может не доходить до нижних слоёв (становиться очень маленьким). С помощью сложения фичей в обход нескольких слоёв (skip connection) получается «проталкивать» градиент до нижних слоёв.</p>
+<h3 id="Аугментация"><a class="header" href="#Аугментация">Аугментация</a></h3>
+<p>Искусственное расширение данных (например, для изображений). Улучшает работу сети в реальной жизни и позволяет получить лучший скор на test выборке.</p>
+<h2 id="6-Заключение"><a class="header" href="#6-Заключение">6. Заключение</a></h2>
+<p>В данной главе были рассмотрены фундаментальные принципы построения нейронных сетей: от модели нейрона до современных методов оптимизации и регуляризации. Понимание процессов обратного распространения, нормализации и выбора оптимизатора критически важно для успешного обучения глубоких моделей.</p>
+<p>В следующих лекциях планируется рассмотрение задач компьютерного зрения (Computer Vision)?</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="Задача-Реализация-knn-классификатора-с-нуля"><a class="header" href="#Задача-Реализация-knn-классификатора-с-нуля">Задача: Реализация KNN-классификатора "с нуля"</a></h1>
 <p>Напишите собственный класс, который реализует алгоритм k ближайших соседей для классификации.</p>
 <p>Класс должен поддерживать:</p>
