@@ -2,5 +2,5 @@
 
 Здесь лежат md-файлы книги "Базовые методы искусственного интеллекта в физических исследованиях".
 
-Книга собирается в [HTML](https://fuodorov.github.io/basic-ml-book) с помощью
+Книга собирается в [HTML](https://phys-dev.github.io/basic-ml-book) с помощью
 [mdbook](https://rust-lang.github.io/mdBook/).
